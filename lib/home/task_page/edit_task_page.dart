@@ -34,7 +34,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
 
   String _taskName;
   String _taskComment;
-  // TimeOfDay _startTime;
+  TimeOfDay _startTime;
   // int _hours;
   // int _minutes;
   TaskPriority _priority;
@@ -73,7 +73,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
             taskName: _taskName,
             taskComment: _taskComment,
             dateCreated: DateTime.now(),
-            // startTime: _startTime,
+            startTime: _startTime,
             // taskDuration: Duration(
             //   hours: _hours,
             //   minutes: _minutes,
@@ -159,16 +159,16 @@ class _EditTaskPageState extends State<EditTaskPage> {
         height: 8,
       ),
       //Time selector...
-      // DateTimePicker(
-      //   labelText: 'Pick Time',
-      //   selectedTime: _startTime ??
-      //       widget.task?.startTime ??
-      //       TimeOfDay(hour: 6, minute: 30),
-      //   onSelectedTime: (value) {
-      //     _startTime = value;
-      //     setState(() {});
-      //   },
-      // ),
+      DateTimePicker(
+        labelText: 'Pick Time',
+        selectedTime: _startTime ??
+            widget.task?.startTime ??
+            TimeOfDay(hour: 6, minute: 30),
+        onSelectedTime: (value) {
+          _startTime = value;
+          setState(() {});
+        },
+      ),
       // DateTime _taskDuration
       // Row(
       //   children: _buildDurationRow(),

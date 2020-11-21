@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:enum_to_string/enum_to_string.dart';
@@ -15,7 +16,7 @@ class Task {
     this.taskComment,
     this.runCount,
     this.dateCreated,
-    // this.startTime,
+    this.startTime,
     // this.taskDuration,
     this.priority,
     this.repeat,
@@ -28,7 +29,7 @@ class Task {
   final String taskComment;
   final int runCount;
   final DateTime dateCreated;
-  // final TimeOfDay startTime;
+  final TimeOfDay startTime;
   // final Duration taskDuration;
   final TaskPriority priority;
   final bool repeat;
@@ -43,8 +44,8 @@ class Task {
     final String taskComment = data['taskComment'];
     final int runCount = data['runCount'];
     final DateTime dateCreated = data['dateCreated'].toDate();
-    // final DateTime startTime =
-    //     DateTime.fromMillisecondsSinceEpoch(data['startTime']);
+    final TimeOfDay startTime =
+        TimeOfDay(hour: data['startTimeHr'], minute: data['startTimeMn']);
     // final DateTime taskDuration =
     // DateTime.fromMillisecondsSinceEpoch(data['taskDuration']);
     final TaskPriority priority =
@@ -60,7 +61,7 @@ class Task {
       taskComment: taskComment,
       runCount: runCount,
       dateCreated: dateCreated,
-      // startTime: TimeOfDay.fromDateTime(startTime),
+      startTime: startTime,
       // taskDuration: Duration(
       //   hours: taskDuration.hour,
       //   minutes: taskDuration.minute,
@@ -80,8 +81,8 @@ class Task {
       'taskComment': taskComment,
       'runCount': runCount,
       'dateCreated': dateCreated,
-      // 'startTime': DateTime(0, 0, 0, startTime.hour, startTime.minute)
-      //     .millisecondsSinceEpoch,
+      'startTimeHr': startTime.hour,
+      'startTimeMn': startTime.minute,
       // 'taskDuration': DateTime(
       //         0,
       //         0,

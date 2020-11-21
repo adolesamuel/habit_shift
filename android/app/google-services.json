@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "510934439481",
+    "firebase_url": "https://habit-shift.firebaseio.com",
+    "project_id": "habit-shift",
+    "storage_bucket": "habit-shift.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510934439481:android:d6f42e812803e5c9a51fe8",
+        "android_client_info": {
+          "package_name": "com.oncode.habit_shift"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510934439481-goo4l9792tn3k30q7umae46hidmu4gap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.oncode.habit_shift",
+            "certificate_hash": "aa37245cab162842cbd9b8de828e84ac1631445c"
+          }
+        },
+        {
+          "client_id": "510934439481-kljur6m3frg8sdhe9jqo9pj09olasvck.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfgR7SFRZwkyFh34WXmSBQlDgetACn0pA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510934439481-kljur6m3frg8sdhe9jqo9pj09olasvck.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

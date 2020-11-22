@@ -35,8 +35,8 @@ class _EditTaskPageState extends State<EditTaskPage> {
   String _taskName;
   String _taskComment;
   TimeOfDay _startTime;
-  // int _hours;
-  // int _minutes;
+  int _hours;
+  int _minutes;
   TaskPriority _priority;
   Frequency _frequency;
 
@@ -74,10 +74,10 @@ class _EditTaskPageState extends State<EditTaskPage> {
             taskComment: _taskComment,
             dateCreated: DateTime.now(),
             startTime: _startTime,
-            // taskDuration: Duration(
-            //   hours: _hours,
-            //   minutes: _minutes,
-            // ),
+            taskDuration: Duration(
+              hours: _hours,
+              minutes: _minutes,
+            ),
             priority: _priority ?? TaskPriority.none,
             repeat: true,
             frequency: _frequency ?? Frequency.none,
@@ -170,9 +170,9 @@ class _EditTaskPageState extends State<EditTaskPage> {
         },
       ),
       // DateTime _taskDuration
-      // Row(
-      //   children: _buildDurationRow(),
-      // ),
+      Row(
+        children: _buildDurationRow(),
+      ),
       // Priority _priority
       // Frequency _frequency
       Row(
@@ -181,34 +181,34 @@ class _EditTaskPageState extends State<EditTaskPage> {
     ];
   }
 
-  // List<Widget> _buildDurationRow() {
-  //   return [
-  //     Expanded(
-  //       flex: 4,
-  //       child: TextFormField(
-  //         onSaved: (value) => _hours = int.tryParse(value) ?? 0,
-  //         initialValue: _hours != null ? '$_hours' : null,
-  //         decoration: InputDecoration(labelText: 'Duration Hrs'),
-  //         keyboardType: TextInputType.numberWithOptions(
-  //           signed: false,
-  //           decimal: false,
-  //         ),
-  //       ),
-  //     ),
-  //     Expanded(
-  //       flex: 4,
-  //       child: TextFormField(
-  //         onSaved: (value) => _minutes = int.tryParse(value) ?? 0,
-  //         initialValue: _minutes != null ? '$_minutes' : null,
-  //         decoration: InputDecoration(labelText: 'Duration Mins'),
-  //         keyboardType: TextInputType.numberWithOptions(
-  //           signed: false,
-  //           decimal: false,
-  //         ),
-  //       ),
-  //     ),
-  //   ];
-  // }
+  List<Widget> _buildDurationRow() {
+    return [
+      Expanded(
+        flex: 4,
+        child: TextFormField(
+          onSaved: (value) => _hours = int.tryParse(value) ?? 0,
+          initialValue: _hours != null ? '$_hours' : null,
+          decoration: InputDecoration(labelText: 'Duration Hrs'),
+          keyboardType: TextInputType.numberWithOptions(
+            signed: false,
+            decimal: false,
+          ),
+        ),
+      ),
+      Expanded(
+        flex: 4,
+        child: TextFormField(
+          onSaved: (value) => _minutes = int.tryParse(value) ?? 0,
+          initialValue: _minutes != null ? '$_minutes' : null,
+          decoration: InputDecoration(labelText: 'Duration Mins'),
+          keyboardType: TextInputType.numberWithOptions(
+            signed: false,
+            decimal: false,
+          ),
+        ),
+      ),
+    ];
+  }
 
   List<Widget> _buildPriorityandFrequencyRow() {
     return [];

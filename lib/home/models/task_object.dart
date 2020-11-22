@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 
 enum TaskPriority { none, first, second, third, fourth, fifth }
 enum Frequency { none, daily, onceAWeek, onceAMonth }
@@ -17,7 +16,7 @@ class Task {
     this.runCount,
     this.dateCreated,
     this.startTime,
-    // this.taskDuration,
+    this.taskDuration,
     this.priority,
     this.repeat,
     this.frequency,
@@ -30,7 +29,7 @@ class Task {
   final int runCount;
   final DateTime dateCreated;
   final TimeOfDay startTime;
-  // final Duration taskDuration;
+  final Duration taskDuration;
   final TaskPriority priority;
   final bool repeat;
   final Frequency frequency;
@@ -46,8 +45,9 @@ class Task {
     final DateTime dateCreated = data['dateCreated'].toDate();
     final TimeOfDay startTime =
         TimeOfDay(hour: data['startTimeHr'], minute: data['startTimeMn']);
-    // final DateTime taskDuration =
-    // DateTime.fromMillisecondsSinceEpoch(data['taskDuration']);
+    final Duration taskDuration = Duration(
+        hours: data['taskDurationHr'] ?? 0,
+        minutes: data['taskDurationMn'] ?? 0);
     final TaskPriority priority =
         EnumToString.fromString(TaskPriority.values, data['priority']);
     final bool repeat = data['repeat'];
@@ -62,11 +62,7 @@ class Task {
       runCount: runCount,
       dateCreated: dateCreated,
       startTime: startTime,
-      // taskDuration: Duration(
-      //   hours: taskDuration.hour,
-      //   minutes: taskDuration.minute,
-      //   seconds: taskDuration.second,
-      // ),
+      taskDuration: taskDuration,
       priority: priority,
       repeat: repeat,
       frequency: frequency,
@@ -83,14 +79,8 @@ class Task {
       'dateCreated': dateCreated,
       'startTimeHr': startTime.hour,
       'startTimeMn': startTime.minute,
-      // 'taskDuration': DateTime(
-      //         0,
-      //         0,
-      //         0,
-      //         taskDuration.inHours,
-      //         taskDuration.inMinutes - (taskDuration.inHours * 60),
-      //         taskDuration.inSeconds - (taskDuration.inMinutes * 60))
-      //     .millisecondsSinceEpoch,
+      'taskDurationHr': taskDuration.inHours,
+      'taskDurationMn': taskDuration.inMinutes - (taskDuration.inHours * 60),
       'priority': EnumToString.convertToString(priority),
       'repeat': repeat,
       'frequency': EnumToString.convertToString(frequency),

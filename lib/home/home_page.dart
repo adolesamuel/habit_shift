@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_shift/home/task_page/edit_task_page.dart';
+import 'package:habit_shift/home/task_page/tasks_page.dart';
 import 'package:habit_shift/services/auth.dart';
 import 'package:habit_shift/services/database.dart';
 import 'package:provider/provider.dart';
@@ -25,12 +26,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Container(
-          child: Text('Under Construction'),
-          color: Color(0xFF2D2F41),
-        ),
-      ),
+      body: TasksPage(),
       floatingActionButton: FloatingActionButton(
         //Todo: Provide database to method of edittaskpage.show
         onPressed: () => EditTaskPage.show(context, database: database),

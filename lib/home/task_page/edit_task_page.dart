@@ -99,7 +99,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.task == null ? 'New Job' : 'Edit Job'),
+        title: Text(widget.task == null ? 'New Job' : widget.task.taskName),
         actions: <Widget>[
           FlatButton(
               onPressed: _submit,

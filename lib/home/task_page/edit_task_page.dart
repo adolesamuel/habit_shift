@@ -58,7 +58,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
         if (widget.task != null) {
           allNames.remove(widget.task.taskName);
         }
-        if (allNames.contains(widget.task?.taskName)) {
+        if (allNames.contains(_taskName)) {
           PlatformAlertDialog(
                   title: 'Task Name already used',
                   content: 'Please choose a differenc Task Name',
@@ -145,13 +145,13 @@ class _EditTaskPageState extends State<EditTaskPage> {
     return [
       TextFormField(
         validator: (value) => value.isNotEmpty ? null : 'Name can\'t be empty',
-        initialValue: _taskName,
+        initialValue: widget.task?.taskName ?? _taskName,
         onSaved: (value) => _taskName = value,
-        decoration: InputDecoration(labelText: 'Task name'),
+        decoration: InputDecoration(labelText: 'Task Name'),
         onEditingComplete: () => _validateAndSaveForm(),
       ),
       TextFormField(
-        initialValue: _taskComment,
+        initialValue: widget.task?.taskComment ?? _taskComment,
         onSaved: (value) => _taskComment = value,
         decoration: InputDecoration(labelText: 'Task Description'),
       ),
@@ -182,12 +182,15 @@ class _EditTaskPageState extends State<EditTaskPage> {
   }
 
   List<Widget> _buildDurationRow() {
+    Duration dur = widget.task?.taskDuration;
+    int _hr = dur?.inHours;
+    int _min = dur != null ? dur?.inMinutes - (dur?.inHours * 60) : 0;
     return [
       Expanded(
         flex: 4,
         child: TextFormField(
           onSaved: (value) => _hours = int.tryParse(value) ?? 0,
-          initialValue: _hours != null ? '$_hours' : null,
+          initialValue: dur != null ? '$_hr' : null,
           decoration: InputDecoration(labelText: 'Duration Hrs'),
           keyboardType: TextInputType.numberWithOptions(
             signed: false,
@@ -199,7 +202,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
         flex: 4,
         child: TextFormField(
           onSaved: (value) => _minutes = int.tryParse(value) ?? 0,
-          initialValue: _minutes != null ? '$_minutes' : null,
+          initialValue: dur != null ? '$_min' : null,
           decoration: InputDecoration(labelText: 'Duration Mins'),
           keyboardType: TextInputType.numberWithOptions(
             signed: false,

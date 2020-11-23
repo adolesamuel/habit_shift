@@ -37,6 +37,7 @@ dependencies:
   # Converts enums to strings
   enum_to_string: ^1.0.14
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

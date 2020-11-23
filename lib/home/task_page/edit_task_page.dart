@@ -159,13 +159,19 @@ class _EditTaskPageState extends State<EditTaskPage> {
         height: 8,
       ),
       //Time selector...
+      //todo: on editing any task startTime returns null if datepicker isn't picked
       DateTimePicker(
         labelText: 'Pick Time',
         selectedTime: _startTime ??
             widget.task?.startTime ??
             TimeOfDay(hour: 6, minute: 30),
+        onSaved: (value) {
+          _startTime = value;
+          print('Time from onSave $value');
+        },
         onSelectedTime: (value) {
           _startTime = value;
+          print('Time from onSelectTime $value');
           setState(() {});
         },
       ),

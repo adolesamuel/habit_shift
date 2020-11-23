@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: LandingPage(),
+          debugShowCheckedModeBanner: false,
         );
       },
     );

@@ -10,35 +10,43 @@ class DateTimePicker extends StatelessWidget {
     this.labelText,
     this.selectedTime,
     this.onSelectedTime,
+    this.onSaved,
   }) : super(key: key);
 
   final String labelText;
   final TimeOfDay selectedTime;
   final ValueChanged<TimeOfDay> onSelectedTime;
+  final FormFieldSetter<TimeOfDay> onSaved;
 
-  Future<void> _selectTime(BuildContext context) async {
+  Future<void> _selectTime(BuildContext context, FormFieldState state) async {
     final pickedTime =
         await showTimePicker(context: context, initialTime: selectedTime);
     if (pickedTime != null) {
       onSelectedTime(pickedTime);
+      state.didChange(pickedTime);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final valueStyle = Theme.of(context).textTheme.headline6;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        Expanded(
-          flex: 4,
-          child: InputDropdown(
-            valueText: selectedTime.format(context),
-            valueStyle: valueStyle,
-            onPressed: () => _selectTime(context),
-          ),
-        ),
-      ],
-    );
+    return FormField<TimeOfDay>(
+        onSaved: onSaved,
+        initialValue: selectedTime,
+        builder: (FormFieldState state) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Expanded(
+                flex: 4,
+                child: InputDropdown(
+                  valueText: selectedTime.format(context),
+                  valueStyle: valueStyle,
+                  onPressed: () => _selectTime(context, state),
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

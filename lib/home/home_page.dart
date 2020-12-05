@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
             notifsPlugin: flutterLocalNotificationsPlugin,
             id: DateTime.now().toString(),
             body: 'Scheduled Notification from FAB',
-            scheduledTime: DateTime.now().add(Duration(minutes: 1))),
+            scheduledTime: DateTime.now().add(Duration(seconds: 3))),
         // EditTaskPage.show(context, database: database),
         child: Icon(Icons.add),
       ),

@@ -39,6 +39,7 @@ dependencies:
   enum_to_string: ^1.0.14
 
   timezone: ^0.5.9
+  flutter_native_timezone: ^1.0.4
 
 
 dev_dependencies:

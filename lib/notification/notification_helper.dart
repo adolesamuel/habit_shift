@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habit_shift/notification/timezone_helper.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationClass {
   final int id;
@@ -92,11 +94,22 @@ class NotificationClass {
       android: androidPlatformChannelSpecifics,
       iOS: iOsPlatfromChannelSpecifics,
     );
+
+    //gets device  location using TimeZone Helperfile
+    final timeZone = TimeZone();
+
+    String timeZoneName = await timeZone.getTimeZoneName();
+
+    final location = await timeZone.getLocation(timeZoneName);
+
+    // returns tzdatetime from datetime and location.
+    final tzdateTime = tz.TZDateTime.from(scheduledTime, location);
+
     await notifsPlugin.zonedSchedule(
       id.hashCode,
       title,
       body,
-      scheduledTime,
+      tzdateTime,
       platformChannelSpecifics,
       androidAllowWhileIdle: true,
       matchDateTimeComponents: DateTimeComponents.time,

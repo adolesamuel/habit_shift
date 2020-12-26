@@ -66,7 +66,6 @@ class NotificationClass {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
             'your channel id', 'your channel name', 'your channel description',
-            //icon: 'notifyicon',
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker');
@@ -87,15 +86,22 @@ class NotificationClass {
       'show weekly channel id',
       'show weekly channel name',
       'show weekly description',
-      icon: 'notifyicon',
     );
     final iOsPlatfromChannelSpecifics = IOSNotificationDetails();
     final platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
       iOS: iOsPlatfromChannelSpecifics,
     );
-    await notifsPlugin.periodicallyShow(id.hashCode, title, body,
-        RepeatInterval.daily, platformChannelSpecifics,
-        androidAllowWhileIdle: true);
+    await notifsPlugin.zonedSchedule(
+      id.hashCode,
+      title,
+      body,
+      scheduledTime,
+      platformChannelSpecifics,
+      androidAllowWhileIdle: true,
+      matchDateTimeComponents: DateTimeComponents.time,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
   }
 }

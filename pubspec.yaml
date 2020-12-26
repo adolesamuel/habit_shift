@@ -38,6 +38,8 @@ dependencies:
   # Converts enums to strings
   enum_to_string: ^1.0.14
 
+  timezone: ^0.5.9
+
 
 dev_dependencies:
   flutter_test:

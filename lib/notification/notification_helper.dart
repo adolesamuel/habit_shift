@@ -56,4 +56,46 @@ class NotificationClass {
         scheduledTime,
         platformChannelSpecifics); // This line schedules the notification.
   }
+
+  Future<void> showNotification(
+      {FlutterLocalNotificationsPlugin notifsPlugin,
+      String id,
+      String title,
+      String body,
+      DateTime scheduledTime}) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+            'your channel id', 'your channel name', 'your channel description',
+            //icon: 'notifyicon',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker');
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await notifsPlugin.show(0, 'Show Notification once', 'Yay it\'s working',
+        platformChannelSpecifics,
+        payload: 'item x');
+  }
+
+  Future<void> showDailyAtTime(
+      {FlutterLocalNotificationsPlugin notifsPlugin,
+      String id,
+      String title,
+      String body,
+      DateTime scheduledTime}) async {
+    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'show weekly channel id',
+      'show weekly channel name',
+      'show weekly description',
+      icon: 'notifyicon',
+    );
+    final iOsPlatfromChannelSpecifics = IOSNotificationDetails();
+    final platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOsPlatfromChannelSpecifics,
+    );
+    await notifsPlugin.periodicallyShow(id.hashCode, title, body,
+        RepeatInterval.daily, platformChannelSpecifics,
+        androidAllowWhileIdle: true);
+  }
 }

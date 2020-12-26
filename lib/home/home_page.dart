@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
       body: TasksPage(),
       floatingActionButton: FloatingActionButton(
         //Todo: Provide database to method of edittaskpage.show
-        onPressed: () => NotificationClass().scheduleNotification(
+        onPressed: () => NotificationClass().showNotification(
             notifsPlugin: flutterLocalNotificationsPlugin,
             id: DateTime.now().toString(),
             body: 'Scheduled Notification from FAB',

@@ -38,6 +38,7 @@ dependencies:
   # Converts enums to strings
   enum_to_string: ^1.0.14
 
+  #correct timezone for notification time
   timezone: ^0.5.9
   flutter_native_timezone: ^1.0.4
 

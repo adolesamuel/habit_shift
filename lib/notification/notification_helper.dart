@@ -117,4 +117,14 @@ class NotificationClass {
           UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
+
+  Future<void> cancelNotification(
+      FlutterLocalNotificationsPlugin nP, int id) async {
+    await nP.cancel(id);
+  }
+
+  Future<void> cancelAllNotifications(
+      FlutterLocalNotificationsPlugin nP) async {
+    await nP.cancelAll();
+  }
 }

@@ -18,6 +18,11 @@ class NotificationClass {
   final BehaviorSubject<String> selectNotificationSubject =
       BehaviorSubject<String>();
 
+  void dispose() {
+    didRecieveLocalNotificationSubject.close();
+    selectNotificationSubject.close();
+  }
+
   Future<void> initNotifications(
       FlutterLocalNotificationsPlugin notifsPlugin) async {
     var initializationSettingsAndroid =

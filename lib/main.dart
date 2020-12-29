@@ -12,16 +12,6 @@ NotificationAppLaunchDetails notifLaunch;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // var initializationSettingsAndroid =
-  //     AndroidInitializationSettings('facebooklogo');
-  // var initializationSettings =
-  //     InitializationSettings(android: initializationSettingsAndroid);
-  // await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-  //     onSelectNotification: (String payload) async {
-  //   if (payload != null) {
-  //     debugPrint('notification payload: ' + payload);
-  //   }
-  // });
   notifLaunch =
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   await NotificationClass().initNotifications(flutterLocalNotificationsPlugin);

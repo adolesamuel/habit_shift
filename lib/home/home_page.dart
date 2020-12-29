@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habit_shift/home/models/task_object.dart';
 import 'package:habit_shift/home/task_page/edit_task_page.dart';
 import 'package:habit_shift/home/task_page/tasks_page.dart';
 import 'package:habit_shift/main.dart';
@@ -32,10 +33,14 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         //Todo: Provide database to method of edittaskpage.show
         onPressed: () => NotificationClass().showDailyAtTime(
-            notifsPlugin: flutterLocalNotificationsPlugin,
-            id: DateTime.now().toString(),
-            body: 'Scheduled Notification from FAB',
-            scheduledTime: DateTime.now().add(Duration(seconds: 3))),
+            notificationsPlugin: flutterLocalNotificationsPlugin,
+            task: Task(
+              id: '24567',
+              taskName: 'Test Task Name',
+              taskComment:
+                  'Task was scheduled from Home Page Floating Action Button',
+              startTime: TimeOfDay.fromDateTime(DateTime.now()),
+            )),
         // EditTaskPage.show(context, database: database),
         child: Icon(Icons.add),
       ),

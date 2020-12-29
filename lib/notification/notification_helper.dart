@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habit_shift/home/models/task_object.dart';
 import 'package:habit_shift/notification/timezone_helper.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -42,6 +43,44 @@ class NotificationClass {
     print('Notification Initialised successfully');
   }
 
+  Future<void> checkPendingNotificationRequest(
+      FlutterLocalNotificationsPlugin np) async {
+    final List<PendingNotificationRequest> pendingNotificationRequest =
+        await np.pendingNotificationRequests();
+    return pendingNotificationRequest.map((e) => Text(e.title)).toList();
+  }
+
+  Future<void> showOnGoingNotification(
+      FlutterLocalNotificationsPlugin np) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'your channel id',
+      'your channel Name',
+      'your channel Description',
+      importance: Importance.max,
+      priority: Priority.high,
+      ongoing: true,
+      autoCancel: false,
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await np.show(0, 'All Notifications', 'ongoing Notification body',
+        platformChannelSpecifics);
+  }
+
+  Future<void> repeatNotificationMinute(
+      {@required FlutterLocalNotificationsPlugin notificationsPlugin,
+      @required Task task}) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails('repeating channel id',
+            'repeating channel name', 'repeating description');
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await notificationsPlugin.periodicallyShow(task.id.hashCode, task.taskName,
+        task.taskComment, RepeatInterval.everyMinute, platformChannelSpecifics);
+  }
+
   Future<void> scheduleNotification(
       {FlutterLocalNotificationsPlugin notifsPlugin,
       String id,
@@ -65,11 +104,7 @@ class NotificationClass {
   }
 
   Future<void> showNotification(
-      {FlutterLocalNotificationsPlugin notifsPlugin,
-      String id,
-      String title,
-      String body,
-      DateTime scheduledTime}) async {
+      {FlutterLocalNotificationsPlugin notifsPlugin, Task task}) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
             'your channel id', 'your channel name', 'your channel description',
@@ -84,15 +119,13 @@ class NotificationClass {
   }
 
   Future<void> showDailyAtTime(
-      {FlutterLocalNotificationsPlugin notifsPlugin,
-      String id,
-      String title,
-      String body,
-      DateTime scheduledTime}) async {
+      {@required FlutterLocalNotificationsPlugin notificationsPlugin,
+      @required Task task}) async {
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'show weekly channel id',
       'show weekly channel name',
       'show weekly description',
+      visibility: NotificationVisibility.public,
     );
     final iOsPlatfromChannelSpecifics = IOSNotificationDetails();
     final platformChannelSpecifics = NotificationDetails(
@@ -108,12 +141,21 @@ class NotificationClass {
     final location = await timeZone.getLocation(timeZoneName);
 
     // returns tzdatetime from datetime and location.
-    final tzdateTime = tz.TZDateTime.from(scheduledTime, location);
+    final now = DateTime.now();
+    final tzdateTime = tz.TZDateTime.from(
+        DateTime(
+          now.year,
+          now.month,
+          now.day,
+          task.startTime.hour,
+          task.startTime.minute,
+        ),
+        location);
 
-    await notifsPlugin.zonedSchedule(
-      id.hashCode,
-      title,
-      body,
+    await notificationsPlugin.zonedSchedule(
+      task.id.hashCode,
+      task.taskName,
+      task.taskComment,
       tzdateTime,
       platformChannelSpecifics,
       androidAllowWhileIdle: true,
@@ -124,8 +166,9 @@ class NotificationClass {
   }
 
   Future<void> cancelNotification(
-      FlutterLocalNotificationsPlugin nP, int id) async {
-    await nP.cancel(id);
+      {@required FlutterLocalNotificationsPlugin notificationsPlugin,
+      @required Task task}) async {
+    await notificationsPlugin.cancel(task.id.hashCode);
   }
 
   Future<void> cancelAllNotifications(

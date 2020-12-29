@@ -44,14 +44,14 @@ class NotificationClass {
   }
 
   Future<void> checkPendingNotificationRequest(
-      FlutterLocalNotificationsPlugin np) async {
+      {@required FlutterLocalNotificationsPlugin notificationsPlugin}) async {
     final List<PendingNotificationRequest> pendingNotificationRequest =
-        await np.pendingNotificationRequests();
+        await notificationsPlugin.pendingNotificationRequests();
     return pendingNotificationRequest.map((e) => Text(e.title)).toList();
   }
 
   Future<void> showOnGoingNotification(
-      FlutterLocalNotificationsPlugin np) async {
+      {@required FlutterLocalNotificationsPlugin notificationsPlugin}) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       'your channel id',
@@ -65,8 +65,8 @@ class NotificationClass {
 
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
-    await np.show(0, 'All Notifications', 'ongoing Notification body',
-        platformChannelSpecifics);
+    await notificationsPlugin.show(0, 'All Notifications',
+        'ongoing Notification body', platformChannelSpecifics);
   }
 
   Future<void> repeatNotificationMinute(
@@ -79,6 +79,18 @@ class NotificationClass {
         NotificationDetails(android: androidPlatformChannelSpecifics);
     await notificationsPlugin.periodicallyShow(task.id.hashCode, task.taskName,
         task.taskComment, RepeatInterval.everyMinute, platformChannelSpecifics);
+  }
+
+  Future<void> repeatNotificationHour(
+      {@required FlutterLocalNotificationsPlugin notificationsPlugin,
+      @required Task task}) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails('repeating channel id',
+            'repeating channel name', 'repeating description');
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await notificationsPlugin.periodicallyShow(task.id.hashCode, task.taskName,
+        task.taskComment, RepeatInterval.hourly, platformChannelSpecifics);
   }
 
   Future<void> scheduleNotification(
@@ -104,7 +116,8 @@ class NotificationClass {
   }
 
   Future<void> showNotification(
-      {FlutterLocalNotificationsPlugin notifsPlugin, Task task}) async {
+      {@required FlutterLocalNotificationsPlugin notifsPlugin,
+      @required Task task}) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
             'your channel id', 'your channel name', 'your channel description',

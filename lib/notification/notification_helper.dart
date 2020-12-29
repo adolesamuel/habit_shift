@@ -116,7 +116,7 @@ class NotificationClass {
   }
 
   Future<void> showNotification(
-      {@required FlutterLocalNotificationsPlugin notifsPlugin,
+      {@required FlutterLocalNotificationsPlugin notificationsPlugin,
       @required Task task}) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
@@ -126,8 +126,8 @@ class NotificationClass {
             ticker: 'ticker');
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
-    await notifsPlugin.show(0, 'Show Notification once', 'Yay it\'s working',
-        platformChannelSpecifics,
+    await notificationsPlugin.show(0, 'Show Notification once ${task.taskName}',
+        'Yay it\'s working', platformChannelSpecifics,
         payload: 'item x');
   }
 

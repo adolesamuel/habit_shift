@@ -26,9 +26,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Using Provider to provide an Auth object to the widget tree
-    return Provider<AuthBase>(
-      create: (context) => Auth(),
-      builder: (context, snapshot) {
+    return MultiProvider(
+      providers: [
+        Provider<AuthBase>(
+          create: (context) => Auth(),
+        ),
+        Provider<FlutterLocalNotificationsPlugin>(
+          create: (context) => flutterLocalNotificationsPlugin,
+        ),
+      ],
+      builder: (context, child) {
         return MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
@@ -42,5 +49,21 @@ class MyApp extends StatelessWidget {
         );
       },
     );
+    // return Provider<AuthBase>(
+    //   create: (context) => Auth(),
+    //   builder: (context, snapshot) {
+    //     return MaterialApp(
+    //       title: 'Flutter Demo',
+    //       theme: ThemeData(
+    //         primarySwatch: Colors.amber,
+    //         brightness: Brightness.light,
+    //         accentColor: Colors.amberAccent,
+    //         visualDensity: VisualDensity.adaptivePlatformDensity,
+    //       ),
+    //       home: LandingPage(),
+    //       debugShowCheckedModeBanner: false,
+    //     );
+    //   },
+    // );
   }
 }

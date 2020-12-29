@@ -61,7 +61,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
         if (allNames.contains(_taskName)) {
           PlatformAlertDialog(
                   title: 'Task Name already used',
-                  content: 'Please choose a differenc Task Name',
+                  content: 'Please use a different Task Name',
                   defaultActionText: 'OK')
               .show(context);
         } else {
@@ -168,7 +168,6 @@ class _EditTaskPageState extends State<EditTaskPage> {
         onSaved: (value) {
           _startTime = value;
           print('Time from onSave $value');
-          
         },
         onSelectedTime: (value) {
           _startTime = value;

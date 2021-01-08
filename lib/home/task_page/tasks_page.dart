@@ -49,11 +49,14 @@ class TasksPage extends StatelessWidget {
     );
   }
 
-  void notificationScheduler(BuildContext context, Task task) {
+  void notificationScheduler(BuildContext context, Task task) async {
     final notificationsPlugin =
         Provider.of<FlutterLocalNotificationsPlugin>(context);
-    //get notifications plugin.
-    //get list of scheduled tasks
+    List<String> pendingNotificationIdList = await NotificationClass()
+        .checkPendingNotificationRequest(
+            notificationsPlugin: notificationsPlugin);
+
+    //get list of scheduled tasks done.
     //check if task is scheduled, if not
     //if task is a daily task use showdailyattime
     //if task is a hourly task use othermethods.

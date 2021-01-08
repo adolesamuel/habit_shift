@@ -43,11 +43,11 @@ class NotificationClass {
     print('Notification Initialised successfully');
   }
 
-  Future<void> checkPendingNotificationRequest(
+  Future<List<String>> checkPendingNotificationRequest(
       {@required FlutterLocalNotificationsPlugin notificationsPlugin}) async {
     final List<PendingNotificationRequest> pendingNotificationRequest =
         await notificationsPlugin.pendingNotificationRequests();
-    return pendingNotificationRequest.map((e) => Text(e.title)).toList();
+    return pendingNotificationRequest.map((e) => e.id.toString()).toList();
   }
 
   Future<void> showOnGoingNotification(

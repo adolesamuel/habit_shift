@@ -25,16 +25,18 @@ class TasksPage extends StatelessWidget {
     return StreamBuilder<List<Task>>(
       stream: database.tasksStream(),
       builder: (context, snapshot) {
-        // var taskList = snapshot.data;
+        List<Task> taskList = snapshot?.data;
 
         //for task in task list
         //if notification isn't scheduled, schedule it based on task data
         //else do nothing
+        // print('taskList : ${taskList?.map((e) => e.id.hashCode.toString())}');
+        if (snapshot.data != null) {
+          for (Task task in taskList) {
+            notificationScheduler(context: context, task: task);
+          }
+        }
 
-        // for (Task task in taskList) {
-        //   NotificationClass().showDailyAtTime(
-        //       notificationsPlugin: np, task: task);
-        // }
         return ListItemsBuilder<Task>(
           snapshot: snapshot,
           itemBuilder: (context, task) {
@@ -49,12 +51,19 @@ class TasksPage extends StatelessWidget {
     );
   }
 
-  void notificationScheduler(BuildContext context, Task task) async {
+  Future<void> notificationScheduler({BuildContext context, Task task}) async {
     final notificationsPlugin =
         Provider.of<FlutterLocalNotificationsPlugin>(context);
     List<String> pendingNotificationIdList = await NotificationClass()
         .checkPendingNotificationRequest(
             notificationsPlugin: notificationsPlugin);
+
+    if (!pendingNotificationIdList.contains(task.id.hashCode.toString())) {
+      NotificationClass().showDailyAtTime(
+          notificationsPlugin: notificationsPlugin, task: task);
+      //TODO: add support for other notification methods
+      print('Scheduled Notification: $pendingNotificationIdList');
+    }
 
     //get list of scheduled tasks done.
     //check if task is scheduled, if not

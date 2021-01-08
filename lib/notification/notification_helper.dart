@@ -157,7 +157,7 @@ class NotificationClass {
     final now = DateTime.now();
     final tzdateTime = tz.TZDateTime.from(
         DateTime(
-          now.year,
+          now.year + 1,
           now.month,
           now.day,
           task.startTime.hour,

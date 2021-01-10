@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
     final database = Provider.of<Database>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Habiate'),
         actions: <Widget>[
           FlatButton(
             onPressed: auth.signOut,

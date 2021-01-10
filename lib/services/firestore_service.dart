@@ -14,6 +14,15 @@ class FirestoreService {
     await reference.set(data);
   }
 
+  Future<void> setActive({
+    @required String path,
+    @required bool value,
+  }) async {
+    final reference = FirebaseFirestore.instance.doc(path);
+    print('$path: $value');
+    await reference.update({"active": value});
+  }
+
   Future<void> deleteData({@required String path}) async {
     final reference = FirebaseFirestore.instance.doc(path);
     print('delete: $path');

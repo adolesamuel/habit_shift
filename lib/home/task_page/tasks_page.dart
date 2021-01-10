@@ -34,6 +34,7 @@ class TasksPage extends StatelessWidget {
         if (snapshot.data != null) {
           for (Task task in taskList) {
             notificationScheduler(context: context, task: task);
+            print('scheduler ran');
           }
         }
 
@@ -58,11 +59,16 @@ class TasksPage extends StatelessWidget {
         .checkPendingNotificationRequest(
             notificationsPlugin: notificationsPlugin);
 
-    if (!pendingNotificationIdList.contains(task.id.hashCode.toString())) {
-      NotificationClass().showDailyAtTime(
+    if (task.active) {
+      if (!pendingNotificationIdList.contains(task.id.hashCode.toString())) {
+        NotificationClass().showDailyAtTime(
+            notificationsPlugin: notificationsPlugin, task: task);
+        //TODO: add support for other notification methods
+        print('Scheduled Notification: $pendingNotificationIdList');
+      }
+    } else {
+      NotificationClass().cancelNotification(
           notificationsPlugin: notificationsPlugin, task: task);
-      //TODO: add support for other notification methods
-      print('Scheduled Notification: $pendingNotificationIdList');
     }
 
     //get list of scheduled tasks done.

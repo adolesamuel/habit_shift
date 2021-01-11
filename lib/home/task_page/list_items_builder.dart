@@ -40,7 +40,7 @@ class ListItemsBuilder<T> extends StatelessWidget {
           return itemBuilder(context, items[index - 1]);
         },
         separatorBuilder: (context, index) => Divider(
-              height: 0.5,
+              height: 16,
             ),
         itemCount: items.length + 2);
   }

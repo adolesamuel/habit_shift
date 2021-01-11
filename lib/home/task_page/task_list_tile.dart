@@ -8,16 +8,14 @@ class TaskListTile extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onEditTap;
   final VoidCallback onDeleteTap;
-  final VoidCallback onSwitchTap;
 
-  const TaskListTile(
-      {Key key,
-      this.task,
-      this.onTap,
-      this.onEditTap,
-      this.onDeleteTap,
-      this.onSwitchTap})
-      : super(key: key);
+  const TaskListTile({
+    Key key,
+    this.task,
+    this.onTap,
+    this.onEditTap,
+    this.onDeleteTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +32,8 @@ class TaskListTile extends StatelessWidget {
               database.setActive(task, value);
             },
           ),
-          Row(
+          ButtonBar(
+            alignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(icon: Icon(Icons.edit), onPressed: onEditTap),
               IconButton(icon: Icon(Icons.delete), onPressed: onDeleteTap),

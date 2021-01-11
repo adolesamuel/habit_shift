@@ -14,6 +14,19 @@ class TasksPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Tasks'),
+        //TODO: better as easily implemented as a button
+        actions: [
+          FlatButton(
+            onPressed: () => cancelAllNotification(context),
+            child: Text(
+              'Cancel All',
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
       body: _buildContent(context),
     );
@@ -43,8 +56,12 @@ class TasksPage extends StatelessWidget {
           itemBuilder: (context, task) {
             return TaskListTile(
               task: task,
-              onTap: () =>
+              onEditTap: () =>
                   EditTaskPage.show(context, database: database, task: task),
+              onDeleteTap: () => {
+                database.deleteTask(task),
+                cancelNotification(context, task),
+              },
             );
           },
         );
@@ -75,5 +92,17 @@ class TasksPage extends StatelessWidget {
     //check if task is scheduled, if not
     //if task is a daily task use showdailyattime
     //if task is a hourly task use othermethods.
+  }
+
+  void cancelNotification(BuildContext context, Task task) {
+    final np = Provider.of<FlutterLocalNotificationsPlugin>(context);
+
+    NotificationClass().cancelNotification(notificationsPlugin: np, task: task);
+  }
+
+  void cancelAllNotification(BuildContext context) {
+    final np = Provider.of<FlutterLocalNotificationsPlugin>(context);
+
+    NotificationClass().cancelAllNotifications(np);
   }
 }

@@ -21,6 +21,7 @@ class TaskListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final database = Provider.of<Database>(context);
     return Card(
+      color: Colors.grey[600],
       child: Column(
         children: [
           SwitchListTile(

@@ -32,16 +32,30 @@ class ListItemsBuilder<T> extends StatelessWidget {
   }
 
   Widget _buildList(List<T> items) {
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          if (index == 0 || index == items.length + 1) {
-            return Container();
-          }
-          return itemBuilder(context, items[index - 1]);
-        },
-        separatorBuilder: (context, index) => Divider(
-              height: 16,
-            ),
-        itemCount: items.length + 2);
+    return
+        // GridView.builder(
+        //   gridDelegate:
+        //       SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        //   itemBuilder: (context, index) {
+        //     if (index == items.length) {
+        //       return Container(
+        //         color: Colors.blue,
+        //       );
+        //     }
+        //     return itemBuilder(context, items[index]);
+        //   },
+        //   itemCount: items.length,
+        // );
+        ListView.separated(
+            itemBuilder: (context, index) {
+              if (index == 0 || index == items.length + 1) {
+                return Container();
+              }
+              return itemBuilder(context, items[index - 1]);
+            },
+            separatorBuilder: (context, index) => Divider(
+                  height: 8,
+                ),
+            itemCount: items.length + 2);
   }
 }

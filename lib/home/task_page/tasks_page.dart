@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habit_shift/common/custom_raised_button.dart';
 import 'package:habit_shift/home/models/task_object.dart';
 import 'package:habit_shift/home/task_page/edit_task_page.dart';
 import 'package:habit_shift/home/task_page/list_items_builder.dart';
@@ -15,18 +16,6 @@ class TasksPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Tasks'),
         //TODO: better as easily implemented as a button
-        actions: [
-          FlatButton(
-            onPressed: () => cancelAllNotification(context),
-            child: Text(
-              'Cancel All',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
       ),
       body: _buildContent(context),
     );
@@ -51,20 +40,38 @@ class TasksPage extends StatelessWidget {
           }
         }
 
-        return ListItemsBuilder<Task>(
-          snapshot: snapshot,
-          itemBuilder: (context, task) {
-            return TaskListTile(
-              task: task,
-              onEditTap: () =>
-                  EditTaskPage.show(context, database: database, task: task),
-              onDeleteTap: () => {
-                database.deleteTask(task),
-                cancelNotification(context, task),
-              },
-            );
-          },
-        );
+        return Stack(children: [
+          ListItemsBuilder<Task>(
+            snapshot: snapshot,
+            itemBuilder: (context, task) {
+              return TaskListTile(
+                task: task,
+                onTap: (value) => {
+                  database.setActive(task, value),
+                  cancelNotification(context, task),
+                },
+                onEditTap: () =>
+                    EditTaskPage.show(context, database: database, task: task),
+                onDeleteTap: () => {
+                  database.deleteTask(task),
+                  cancelNotification(context, task),
+                },
+              );
+            },
+          ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            widthFactor: 3,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CustomRaisedButton(
+                onPressed: () =>
+                    cancelAllNotification(context, taskList, database),
+                child: SizedBox(width: 128, child: Text('Cancel All')),
+              ),
+            ),
+          ),
+        ]);
       },
     );
   }
@@ -95,14 +102,20 @@ class TasksPage extends StatelessWidget {
   }
 
   void cancelNotification(BuildContext context, Task task) {
-    final np = Provider.of<FlutterLocalNotificationsPlugin>(context);
+    final np =
+        Provider.of<FlutterLocalNotificationsPlugin>(context, listen: false);
 
     NotificationClass().cancelNotification(notificationsPlugin: np, task: task);
   }
 
-  void cancelAllNotification(BuildContext context) {
-    final np = Provider.of<FlutterLocalNotificationsPlugin>(context);
+  void cancelAllNotification(
+      BuildContext context, List<Task> taskList, Database database) {
+    final np =
+        Provider.of<FlutterLocalNotificationsPlugin>(context, listen: false);
 
     NotificationClass().cancelAllNotifications(np);
+    for (Task n in taskList) {
+      database.setActive(n, false);
+    }
   }
 }

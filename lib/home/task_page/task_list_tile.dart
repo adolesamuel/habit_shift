@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class TaskListTile extends StatelessWidget {
   final Task task;
-  final VoidCallback onTap;
+  final Function(bool value) onTap;
   final VoidCallback onEditTap;
   final VoidCallback onDeleteTap;
 
@@ -30,7 +30,7 @@ class TaskListTile extends StatelessWidget {
                 '${task.taskComment} : ${task.startTime.hour}:${task.startTime.minute}'),
             value: task.active,
             onChanged: (bool value) {
-              database.setActive(task, value);
+              onTap(value);
             },
           ),
           ButtonBar(

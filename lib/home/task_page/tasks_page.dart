@@ -64,17 +64,21 @@ class TasksPage extends StatelessWidget {
             widthFactor: 3,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: CustomRaisedButton(
+              child: PhysicalModel(
                 color: Theme.of(context).primaryColor,
-                onPressed: () =>
-                    cancelAllNotification(context, taskList, database),
-                child: SizedBox(
-                    width: 128,
-                    child: Text(
-                      'Cancel All',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    )),
+                elevation: 8,
+                child: CustomRaisedButton(
+                  color: Theme.of(context).primaryColor,
+                  onPressed: () =>
+                      cancelAllNotification(context, taskList, database),
+                  child: SizedBox(
+                      width: 128,
+                      child: Text(
+                        'Cancel All',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      )),
+                ),
               ),
             ),
           ),

@@ -47,15 +47,17 @@ class ListItemsBuilder<T> extends StatelessWidget {
         //   itemCount: items.length,
         // );
         ListView.separated(
-            itemBuilder: (context, index) {
-              if (index == 0 || index == items.length + 1) {
-                return Container();
-              }
-              return itemBuilder(context, items[index - 1]);
-            },
-            separatorBuilder: (context, index) => Divider(
-                  height: 8,
-                ),
-            itemCount: items.length + 2);
+      itemBuilder: (context, index) {
+        if (index == 0 || index == items.length + 1) {
+          return Container();
+        }
+        return itemBuilder(context, items[index - 1]);
+      },
+      separatorBuilder: (context, index) => Divider(
+        height: 8,
+      ),
+      itemCount: items.length + 2,
+      physics: BouncingScrollPhysics(),
+    );
   }
 }

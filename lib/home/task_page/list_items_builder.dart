@@ -48,8 +48,13 @@ class ListItemsBuilder<T> extends StatelessWidget {
         // );
         ListView.separated(
       itemBuilder: (context, index) {
-        if (index == 0 || index == items.length + 1) {
+        if (index == 0) {
           return Container();
+        }
+        if (index == items.length + 1) {
+          return Container(
+            height: 64,
+          );
         }
         return itemBuilder(context, items[index - 1]);
       },

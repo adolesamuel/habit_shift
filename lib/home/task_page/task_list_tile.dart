@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:habit_shift/home/models/task_object.dart';
-import 'package:habit_shift/services/database.dart';
-import 'package:provider/provider.dart';
 
 class TaskListTile extends StatelessWidget {
   final Task task;
@@ -19,7 +17,6 @@ class TaskListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final database = Provider.of<Database>(context);
     return Card(
       color: Colors.grey[600],
       child: Column(

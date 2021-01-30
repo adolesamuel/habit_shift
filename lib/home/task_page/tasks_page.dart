@@ -65,9 +65,16 @@ class TasksPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: CustomRaisedButton(
+                color: Theme.of(context).primaryColor,
                 onPressed: () =>
                     cancelAllNotification(context, taskList, database),
-                child: SizedBox(width: 128, child: Text('Cancel All')),
+                child: SizedBox(
+                    width: 128,
+                    child: Text(
+                      'Cancel All',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    )),
               ),
             ),
           ),

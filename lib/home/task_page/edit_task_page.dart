@@ -149,11 +149,15 @@ class _EditTaskPageState extends State<EditTaskPage> {
         onSaved: (value) => _taskName = value,
         decoration: InputDecoration(labelText: 'Task Name'),
         onEditingComplete: () => _validateAndSaveForm(),
+        minLines: 1,
+        maxLines: 3,
       ),
       TextFormField(
         initialValue: widget.task?.taskComment ?? _taskComment,
         onSaved: (value) => _taskComment = value,
         decoration: InputDecoration(labelText: 'Task Description'),
+        minLines: 1,
+        maxLines: 3,
       ),
       SizedBox(
         height: 8,

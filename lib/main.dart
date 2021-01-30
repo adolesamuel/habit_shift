@@ -10,6 +10,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 NotificationAppLaunchDetails notifLaunch;
 void main() async {
+  //since main is asyn ensure it initialises
   WidgetsFlutterBinding.ensureInitialized();
 
   notifLaunch =
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       ],
       builder: (context, child) {
         return MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Habiate',
           theme: ThemeData(
             primarySwatch: Colors.amber,
             brightness: Brightness.light,

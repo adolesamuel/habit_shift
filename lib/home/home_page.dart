@@ -16,19 +16,20 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Habiate'),
-        actions: <Widget>[
-          FlatButton(
-            onPressed: auth.signOut,
-            child: Text(
-              'Logout',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
+        centerTitle: true,
+        leading: FlatButton(
+          onPressed: auth.signOut,
+          child: Icon(Icons.logout),
+          // Text(
+          //   'Logout',
+          //   style: TextStyle(
+          //     fontSize: 16.0,
+          //     color: Colors.white,
+          //   ),
+          // ),
+        ),
       ),
+      backgroundColor: Color(0xffdee2d6),
       body: TasksPage(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => EditTaskPage.show(context, database: database),

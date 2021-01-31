@@ -14,7 +14,9 @@ class TasksPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 128,
         title: Text('Tasks'),
+        centerTitle: true,
         //TODO: better as easily implemented as a button
       ),
       body: _buildContent(context),

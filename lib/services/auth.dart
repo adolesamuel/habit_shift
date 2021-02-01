@@ -2,13 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-
-//Class of app user items
-class UserObject {
-  UserObject({@required this.uid});
-
-  final String uid;
-}
+import 'package:habit_shift/home/models/user_object.dart';
 
 abstract class AuthBase {
   Future<void> signOut();
@@ -30,7 +24,10 @@ class Auth implements AuthBase {
     if (user == null)
       return null;
     else
-      return UserObject(uid: user.uid);
+      return UserObject(
+        uid: user.uid,
+        email: user.email,
+      );
   }
 
   //return a stream of Userobjects whenever user signs in or out
@@ -58,6 +55,7 @@ class Auth implements AuthBase {
   @override
   Future<UserObject> signInAnonymously() async {
     final authResult = await _firebaseAuth.signInAnonymously();
+
     return _userFromFirebase(authResult.user);
   }
 

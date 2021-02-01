@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:habit_shift/home/models/user_object.dart';
 import 'package:habit_shift/services/auth.dart';
 
 class SignInBloc {

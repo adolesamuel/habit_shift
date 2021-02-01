@@ -9,4 +9,6 @@ class APIPath {
       'users/$uid/entries/$entry';
 
   static String entries({String uid}) => 'users/$uid/entries';
+
+  static String userData({@required String uid}) => 'users/$uid';
 }

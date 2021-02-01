@@ -1,3 +1,4 @@
+import 'package:habit_shift/home/models/user_object.dart';
 import 'package:habit_shift/services/api_path.dart';
 import 'package:habit_shift/services/firestore_service.dart';
 import 'package:meta/meta.dart';
@@ -5,6 +6,7 @@ import 'package:habit_shift/home/models/task_object.dart';
 
 abstract class Database {
   Future<void> setTask(Task task);
+  Future<void> setUserData(UserObject userObject);
   Future<void> deleteTask(Task task);
   Future<void> setActive(Task task, bool value);
   Stream<List<Task>> tasksStream();
@@ -23,6 +25,10 @@ class FirestoreDatabase implements Database {
   @override
   Future<void> setTask(Task task) async => await _service.setData(
       path: APIPath.task(uid: uid, taskId: task.id), data: task.toMap());
+
+  @override
+  Future<void> setUserData(UserObject userObject) async => await _service
+      .setData(path: APIPath.userData(uid: uid), data: userObject.toMap());
 
   @override
   Future<void> setActive(Task task, bool value) async =>

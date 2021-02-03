@@ -1,8 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:habit_shift/common/platform_exception_alert_dialog.dart';
 import 'package:habit_shift/common/sign_in_button.dart';
-import 'package:habit_shift/home/models/user_object.dart';
 import 'package:habit_shift/services/auth.dart';
 import 'package:habit_shift/sign_in/sign_in_bloc.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +35,7 @@ class SignInPage extends StatelessWidget {
   Future<void> _signInAnonymously(BuildContext context) async {
     try {
       print('signIn anon tried bloc:$bloc');
-      UserObject user = await bloc?.signInAnonymously();
+      User user = await bloc?.signInAnonymously();
 
       print('User: ${user?.uid}');
     } on PlatformException catch (e) {

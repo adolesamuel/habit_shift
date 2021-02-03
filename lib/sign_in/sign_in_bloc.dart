@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:habit_shift/home/models/user_object.dart';
 import 'package:habit_shift/services/auth.dart';
 
 class SignInBloc {
@@ -18,7 +18,7 @@ class SignInBloc {
 
   void _setIsLoading(bool isLoading) => _isLoadingController.add(isLoading);
 
-  Future<UserObject> _signIn(Future<UserObject> Function() signInMethod) async {
+  Future<User> _signIn(Future<User> Function() signInMethod) async {
     try {
       _setIsLoading(true);
       return await signInMethod();
@@ -28,6 +28,6 @@ class SignInBloc {
     }
   }
 
-  Future<UserObject> signInAnonymously() async =>
+  Future<User> signInAnonymously() async =>
       await _signIn(auth.signInAnonymously);
 }

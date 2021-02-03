@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_shift/common/custom_raised_button.dart';
@@ -13,12 +14,12 @@ import 'package:provider/provider.dart';
 class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserObject>(context);
+    final user = Provider.of<User>(context);
     return Scaffold(
       // replace appbar with userProfile app Bar
       appBar: AppBar(
         toolbarHeight: 128,
-        title: Text('${user.photoUrl}'),
+        title: Text('${user.displayName}'),
         centerTitle: true,
         //TODO: better as easily implemented as a button
       ),

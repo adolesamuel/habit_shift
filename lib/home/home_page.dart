@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_shift/home/models/task_object.dart';
@@ -14,10 +15,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthBase>(context);
     final database = Provider.of<Database>(context);
-    final user = Provider.of<UserObject>(context);
+    final user = Provider.of<User>(context);
 
     //create entries for user
-    database.setUserData(user);
+    //database.setUserData(user);
     return Scaffold(
       appBar: AppBar(
         title: Text('Habiate'),

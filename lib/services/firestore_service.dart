@@ -23,6 +23,13 @@ class FirestoreService {
     await reference.update({"active": value});
   }
 
+  Future<void> updateUserField(
+      {@required String path, @required String field, @required value}) async {
+    final reference = FirebaseFirestore.instance.doc(path);
+    print('$path= $field : $value');
+    await reference.update({"$field": value});
+  }
+
   Future<void> deleteData({@required String path}) async {
     final reference = FirebaseFirestore.instance.doc(path);
     print('delete: $path');

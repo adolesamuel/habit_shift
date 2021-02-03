@@ -6,14 +6,12 @@ import 'package:habit_shift/home/models/user_object.dart';
 
 abstract class AuthBase {
   Future<void> signOut();
-  Stream<UserObject> get onUserAuthStateChanged;
-  Future<UserObject> signInAnonymously();
+  Stream<User> get onUserAuthStateChanged;
+  Future<User> signInAnonymously();
   // Future<UserObject> signInWithGoogle();
   // Future<UserObject> signInWithFacebook();
-  Future<UserObject> signInWithEmailAndPassword(
-      {String email, String password});
-  Future<UserObject> createUserWithEmailAndPassword(
-      {String email, String password});
+  Future<User> signInWithEmailAndPassword({String email, String password});
+  Future<User> createUserWithEmailAndPassword({String email, String password});
 }
 
 class Auth implements AuthBase {
@@ -21,42 +19,49 @@ class Auth implements AuthBase {
 
   //return userobject with uid.
   UserObject _userFromFirebase(User user) {
-    if (user == null)
+    if (user == null) {
       return null;
-    else
+    }
+    if (user.isAnonymous) {
+      return UserObject(
+        uid: user.uid,
+        displayName: 'Anonymous',
+      );
+    } else {
       return UserObject(
         uid: user.uid,
         email: user.email,
       );
+    }
   }
 
   //return a stream of Userobjects whenever user signs in or out
   @override
-  Stream<UserObject> get onUserAuthStateChanged {
-    return _firebaseAuth.onAuthStateChanged.map(_userFromFirebase);
+  Stream<User> get onUserAuthStateChanged {
+    return _firebaseAuth.userChanges();
   }
 
   @override
-  Future<UserObject> signInWithEmailAndPassword(
+  Future<User> signInWithEmailAndPassword(
       {String email, String password}) async {
     final authResult = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    return _userFromFirebase(authResult.user);
+    return authResult.user;
   }
 
   @override
-  Future<UserObject> createUserWithEmailAndPassword(
+  Future<User> createUserWithEmailAndPassword(
       {String email, String password}) async {
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
-    return _userFromFirebase(authResult.user);
+    return authResult.user;
   }
 
   @override
-  Future<UserObject> signInAnonymously() async {
+  Future<User> signInAnonymously() async {
     final authResult = await _firebaseAuth.signInAnonymously();
 
-    return _userFromFirebase(authResult.user);
+    return authResult.user;
   }
 
   @override

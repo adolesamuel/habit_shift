@@ -36,6 +36,7 @@ class SignInPage extends StatelessWidget {
     try {
       print('signIn anon tried bloc:$bloc');
       UserObject user = await bloc?.signInAnonymously();
+
       print('User: ${user?.uid}');
     } on PlatformException catch (e) {
       _showSignInError(context, e);

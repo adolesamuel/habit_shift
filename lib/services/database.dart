@@ -9,6 +9,7 @@ abstract class Database {
   Future<void> setUserData(UserObject userObject);
   Future<void> deleteTask(Task task);
   Future<void> setActive(Task task, bool value);
+  Future<void> updateUserField(String field, dynamic value);
   Stream<List<Task>> tasksStream();
   Stream<Task> taskStream({@required String taskId});
 }
@@ -38,6 +39,11 @@ class FirestoreDatabase implements Database {
       );
 
   @override
+  Future<void> updateUserField(String field, dynamic value) async =>
+      await _service.updateUserField(
+          path: APIPath.userData(uid: uid), field: field, value: value);
+
+  @override
   Future<void> deleteTask(Task task) async {
     await _service.deleteData(path: APIPath.task(uid: uid, taskId: task.id));
   }
@@ -52,5 +58,11 @@ class FirestoreDatabase implements Database {
   Stream<List<Task>> tasksStream() => _service.collectionStream(
         path: APIPath.tasks(uid: uid),
         builder: (data, documentId) => Task.fromMap(data, documentId),
+      );
+
+  Stream<UserObject> userObjectStream({@required String uid}) =>
+      _service.documentStream(
+        path: APIPath.userData(uid: uid),
+        builder: (data, uid) => UserObject.fromMap(data, uid),
       );
 }

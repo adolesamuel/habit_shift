@@ -39,6 +39,7 @@ class UserObject {
 
   Map<String, dynamic> toMap() {
     return {
+      'uid': uid,
       'email': email,
       'photoUrl': photoUrl,
       'displayName': displayName,

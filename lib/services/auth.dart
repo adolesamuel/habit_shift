@@ -7,8 +7,8 @@ abstract class AuthBase {
   Future<void> signOut();
   Stream<User> get onUserAuthStateChanged;
   Future<User> signInAnonymously();
-  // Future<UserObject> signInWithGoogle();
-  // Future<UserObject> signInWithFacebook();
+  // Future<User> signInWithGoogle();
+  // Future<User> signInWithFacebook();
   Future<User> signInWithEmailAndPassword({String email, String password});
   Future<User> createUserWithEmailAndPassword({String email, String password});
 }
@@ -16,7 +16,7 @@ abstract class AuthBase {
 class Auth implements AuthBase {
   final _firebaseAuth = FirebaseAuth.instance;
 
-  //return a stream of Userobjects whenever user signs in or out
+  //return a stream of Firebase User whenever user signs in or out
   @override
   Stream<User> get onUserAuthStateChanged {
     return _firebaseAuth.userChanges();

@@ -1,4 +1,6 @@
 //Class of app user items
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
 class UserObject {
@@ -46,5 +48,16 @@ class UserObject {
       'numOfTasks': numOfTasks,
       'premiumUser': premiumUser,
     };
+  }
+
+  UserObject userObjectFromFirebaseUser(User user) {
+    if (user == null) {
+      return null;
+    } else {
+      return UserObject(
+        uid: user.uid,
+        email: user.email,
+      );
+    }
   }
 }

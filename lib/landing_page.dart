@@ -21,6 +21,9 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return SignInPage.create(context);
           } else {
+            //collect details from firebase user
+            //enter user details into database here do not overwrite to null.
+            //get user details from firebase and provide it here with multiprovider
             return Provider<User>.value(
               value: user,
               child: Provider<Database>(

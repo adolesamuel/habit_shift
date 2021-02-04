@@ -9,7 +9,8 @@ abstract class Database {
   Future<void> setUserData(UserObject userObject);
   Future<void> deleteTask(Task task);
   Future<void> setActive(Task task, bool value);
-  Future<void> updateUserField(String field, dynamic value);
+  Future<void> updateUserField(
+      {@required String field, @required dynamic value});
   Stream<List<Task>> tasksStream();
   Stream<Task> taskStream({@required String taskId});
 }
@@ -39,7 +40,8 @@ class FirestoreDatabase implements Database {
       );
 
   @override
-  Future<void> updateUserField(String field, dynamic value) async =>
+  Future<void> updateUserField(
+          {@required String field, @required dynamic value}) async =>
       await _service.updateUserField(
           path: APIPath.userData(uid: uid), field: field, value: value);
 

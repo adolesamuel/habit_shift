@@ -16,9 +16,12 @@ class TasksPage extends StatelessWidget {
     final firebaseUser = Provider.of<User>(context);
     return Scaffold(
       // replace appbar with userProfile app Bar
+      //figure out how to write user data from firebase user through userobject to firebase
       appBar: AppBar(
         toolbarHeight: 128,
-        title: Text('${firebaseUser.displayName}'),
+        title: firebaseUser.isAnonymous
+            ? Text('Anonymous')
+            : ('${firebaseUser.displayName}'),
         centerTitle: true,
         //TODO: better as easily implemented as a button
       ),

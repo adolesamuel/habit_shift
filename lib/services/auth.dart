@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:habit_shift/home/models/user_object.dart';
 
 abstract class AuthBase {
   Future<void> signOut();
@@ -11,10 +12,18 @@ abstract class AuthBase {
   // Future<User> signInWithFacebook();
   Future<User> signInWithEmailAndPassword({String email, String password});
   Future<User> createUserWithEmailAndPassword({String email, String password});
+  UserObject userFromFirebase(User user);
 }
 
 class Auth implements AuthBase {
   final _firebaseAuth = FirebaseAuth.instance;
+
+  UserObject userFromFirebase(User user) {
+    if (user == null)
+      return null;
+    else
+      return UserObject(uid: user.uid);
+  }
 
   //return a stream of Firebase User whenever user signs in or out
   @override

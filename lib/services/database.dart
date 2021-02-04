@@ -13,6 +13,7 @@ abstract class Database {
       {@required String field, @required dynamic value});
   Stream<List<Task>> tasksStream();
   Stream<Task> taskStream({@required String taskId});
+  Stream<UserObject> userObjectStream({@required String uid});
 }
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
@@ -62,6 +63,7 @@ class FirestoreDatabase implements Database {
         builder: (data, documentId) => Task.fromMap(data, documentId),
       );
 
+  @override
   Stream<UserObject> userObjectStream({@required String uid}) =>
       _service.documentStream(
         path: APIPath.userData(uid: uid),

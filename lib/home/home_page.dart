@@ -11,8 +11,6 @@ class HomePage extends StatelessWidget {
     final auth = Provider.of<AuthBase>(context);
     final database = Provider.of<Database>(context);
 
-    //create entries for user
-    //database.setUserData(user);
     return Scaffold(
       appBar: AppBar(
         title: Text('Habiate'),

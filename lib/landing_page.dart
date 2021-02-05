@@ -10,6 +10,12 @@ import 'package:provider/provider.dart';
 class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ///uses a stream of auth, firebaseUser, personal userobject and database object
+    /// to build pages.
+    /// Streambuilder consumes firebaseUser [User]
+    /// checks [User.uid] and goes to [SignInPage] if null and else [HomePage]
+    /// HomePage is loaded with data from Userobject and Database that is created automatically on signup
+
     //listening to onAuthStatechanged
     final auth = Provider.of<AuthBase>(context);
     return StreamBuilder<User>(
@@ -22,19 +28,26 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return SignInPage.create(context);
           } else {
-            //collect details from firebase user
-            UserObject userObject = auth.userFromFirebase(user);
-            //enter user details into database here do not overwrite to null.
-            //get user details from firebase and provide it here with multiprovider
-            Stream<UserObject> userObjectStream =
-                FirestoreDatabase(uid: user.uid)
-                    .userObjectStream(uid: user.uid);
+            //exposing Firebaseuser to widgets that need it
             return Provider<User>.value(
               value: user,
-              child: Provider<Database>(
-                create: (_) => FirestoreDatabase(uid: user.uid),
-                child: HomePage(),
-              ),
+              //streaming Userobject database data
+              child: StreamBuilder<UserObject>(
+                  stream: FirestoreDatabase(uid: user.uid)
+                      .userObjectStream(uid: user.uid),
+                  builder: (context, snapshot) {
+                    UserObject userObjectStream = snapshot.data;
+
+                    //using multiprovider to expose database and userobject entries to homepage
+                    return MultiProvider(
+                      providers: [
+                        Provider<Database>(
+                            create: (_) => FirestoreDatabase(uid: user.uid)),
+                        Provider<UserObject>.value(value: userObjectStream),
+                      ],
+                      child: HomePage(),
+                    );
+                  }),
             );
           }
         } else {

@@ -12,17 +12,26 @@ abstract class AuthBase {
   // Future<User> signInWithFacebook();
   Future<User> signInWithEmailAndPassword({String email, String password});
   Future<User> createUserWithEmailAndPassword({String email, String password});
-  UserObject userFromFirebase(User user);
+  UserObject userFromFirebaseOnSignUp(User user);
 }
 
 class Auth implements AuthBase {
   final _firebaseAuth = FirebaseAuth.instance;
 
-  UserObject userFromFirebase(User user) {
+  UserObject userFromFirebaseOnSignUp(User user) {
     if (user == null)
       return null;
     else
-      return UserObject(uid: user.uid);
+      return UserObject(
+        uid: user.uid,
+        email: user.isAnonymous ? 'Anonymous' : user.email,
+        displayName: user.isAnonymous ? 'Anonymous' : 'Add UserName',
+        //TODO: placeholder photourl
+        photoUrl: user.isAnonymous ? null : null,
+        numOfTasks: 0,
+        isPremiumUser: false,
+        dateCreated: DateTime.now(),
+      );
   }
 
   //return a stream of Firebase User whenever user signs in or out

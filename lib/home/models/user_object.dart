@@ -10,7 +10,8 @@ class UserObject {
     this.photoUrl,
     this.displayName,
     this.numOfTasks,
-    this.premiumUser,
+    this.isPremiumUser,
+    this.dateCreated,
   });
 
   final String uid;
@@ -18,7 +19,8 @@ class UserObject {
   final String photoUrl;
   final String displayName;
   final int numOfTasks;
-  final bool premiumUser;
+  final bool isPremiumUser;
+  final DateTime dateCreated;
   //email,photourl,displayname, number of tasks, premium or free user.
 
   factory UserObject.fromMap(Map<String, dynamic> data, String documentId) {
@@ -28,15 +30,18 @@ class UserObject {
     String photoUrl = data['photoUrl'];
     String displayName = data['displayName'];
     int numOfTasks = data['numOfTasks'];
-    bool premiumUser = data['premiumUser'];
+    bool isPremiumUser = data['isPremiumUser'];
+    DateTime dateCreated = data['dateCreated'].toDate();
 
     return UserObject(
-        uid: documentId,
-        email: email,
-        photoUrl: photoUrl,
-        displayName: displayName,
-        numOfTasks: numOfTasks,
-        premiumUser: premiumUser);
+      uid: documentId,
+      email: email,
+      photoUrl: photoUrl,
+      displayName: displayName,
+      numOfTasks: numOfTasks,
+      isPremiumUser: isPremiumUser,
+      dateCreated: dateCreated,
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -46,18 +51,8 @@ class UserObject {
       'photoUrl': photoUrl,
       'displayName': displayName,
       'numOfTasks': numOfTasks,
-      'premiumUser': premiumUser,
+      'isPremiumUser': isPremiumUser,
+      'dateCreated': dateCreated,
     };
-  }
-
-  UserObject userObjectFromFirebaseUser(User user) {
-    if (user == null) {
-      return null;
-    } else {
-      return UserObject(
-        uid: user.uid,
-        email: user.email,
-      );
-    }
   }
 }

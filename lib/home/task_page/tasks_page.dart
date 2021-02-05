@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_shift/common/custom_raised_button.dart';
 import 'package:habit_shift/home/models/task_object.dart';
+import 'package:habit_shift/home/models/user_object.dart';
 import 'package:habit_shift/home/task_page/edit_task_page.dart';
 import 'package:habit_shift/home/task_page/list_items_builder.dart';
 import 'package:habit_shift/home/task_page/task_list_tile.dart';
@@ -14,14 +15,14 @@ class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = Provider.of<User>(context);
+    final userObject = Provider.of<UserObject>(context);
     return Scaffold(
-      // replace appbar with userProfile app Bar
+      //TODO: replace appbar with userProfile app Bar
       //figure out how to write user data from firebase user through userobject to firebase
       appBar: AppBar(
         toolbarHeight: 128,
-        title: firebaseUser.isAnonymous
-            ? Text('Anonymous')
-            : ('${firebaseUser.displayName}'),
+        title: Text(
+            '${userObject?.displayName} Created : ${userObject?.dateCreated}'),
         centerTitle: true,
         //TODO: better as easily implemented as a button
       ),
